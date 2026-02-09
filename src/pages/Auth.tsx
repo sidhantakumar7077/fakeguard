@@ -10,17 +10,26 @@ const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12">
+    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12">
+      {/* Background effects */}
+      <div className="absolute inset-0 bg-grid opacity-50" />
+      <div className="absolute top-1/4 left-1/3 h-64 w-64 rounded-full bg-primary/5 blur-[100px]" />
+
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-md"
+        initial={{ opacity: 0, y: 20, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="relative w-full max-w-md"
       >
         <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex rounded-full bg-accent p-3">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
+            className="mb-4 inline-flex rounded-full bg-primary/10 p-3 border border-primary/20"
+          >
             <Shield className="h-8 w-8 text-primary" />
-          </div>
+          </motion.div>
           <h1 className="text-2xl font-bold text-foreground">
             {isLogin ? "Welcome back" : "Create an account"}
           </h1>
@@ -29,34 +38,38 @@ const Auth = () => {
           </p>
         </div>
 
-        <div className="rounded-xl border bg-card p-8 shadow-card">
+        <div className="rounded-xl border border-border/50 bg-card p-8 shadow-card glow-border">
           <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
             {!isLogin && (
-              <div className="space-y-2">
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="space-y-2"
+              >
                 <Label htmlFor="name">Full Name</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input id="name" placeholder="Your full name" className="pl-10" />
+                  <Input id="name" placeholder="Your full name" className="pl-10 bg-background border-border/50 focus:border-primary/50" />
                 </div>
-              </div>
+              </motion.div>
             )}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input id="email" type="email" placeholder="you@example.com" className="pl-10" />
+                <Input id="email" type="email" placeholder="you@example.com" className="pl-10 bg-background border-border/50 focus:border-primary/50" />
               </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input id="password" type="password" placeholder="••••••••" className="pl-10" />
+                <Input id="password" type="password" placeholder="••••••••" className="pl-10 bg-background border-border/50 focus:border-primary/50" />
               </div>
             </div>
 
             <Link to="/dashboard">
-              <Button className="w-full" size="lg">
+              <Button className="w-full shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 hover:scale-[1.02]" size="lg">
                 {isLogin ? "Sign In" : "Create Account"}
               </Button>
             </Link>
